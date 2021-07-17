@@ -182,8 +182,8 @@ class AdmPageQState extends State<HomePgNEW>{
                                                                      onPressed:() async{
                                                                        DBProvider.db.idInBase =  item.id;
                                                                        DBProvider.db.conNomerInBase = item.conNomer;
-                                                                       DBProvider.db.nameConInBase = item.nameCon;
-                                                                       await DBProvider.db.getConNEW(DBProvider.db.newMarka);
+                                                                       //DBProvider.db.nameConInBase = item.nameCon;
+                                                                       await DBProvider.db.getMarka(DBProvider.db.newMarka);
                                                                        setState(() {});
                                                                      }
                                                                      
@@ -245,10 +245,9 @@ class AdmPageQState extends State<HomePgNEW>{
                                                                          color: Colors.red,
                                                                        ),
                                                                        onPressed:()async{
-                                                                       //  var list =DBProvider.db.getAllContainerCoolersss(ContainerCooler(_,_,_,_)) ;
                                                                          DBProvider.db.idInBase =  item.id;
                                                                          DBProvider.db.nameConInBase = item.nameCon;
-                                                                         print('добавление модели ' + DBProvider.db.getAlltoSAVE());
+                                                                       //  print('добавление модели ' + DBProvider.db.getAlltoSAVE());
                                                                          await DBProvider.db.getModel(DBProvider.db.newModel);
                                                                          setState(() {});
 

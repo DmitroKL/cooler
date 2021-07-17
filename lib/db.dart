@@ -17,9 +17,7 @@ class DBProvider {
   String conNomerInBase;
   String nameConInBase;
 
-
   static final DBProvider db = DBProvider._();
-
   Database _database;
 
   var newMarka = ContainerCooler(
@@ -37,7 +35,8 @@ class DBProvider {
   );
 
   Future<Database> get database async {
-    if (_database != null) return _database;
+    if (_database != null)
+      return _database;
     _database = await initDB();
     return _database;
   }
@@ -50,13 +49,15 @@ class DBProvider {
         version: 1,
         onOpen: (db) {},
         onCreate: (Database db, int version) async {
-          await db.execute("CREATE TABLE ContainerCooler ("
+          await db.execute(
+              "CREATE TABLE ContainerCooler ("
               "id INTEGER PRIMARY KEY,"
               "conNomer TEXT,"
               "nameCon TEXT,"
               "nomerYaCon INTEGER"
               ")"
           );
+
         });
   }
 
@@ -79,7 +80,7 @@ class DBProvider {
     return raw;
   }
 
-  getConNEW(ContainerCooler newContainerCooler) async {
+  getMarka(ContainerCooler newContainerCooler) async {
     final db = await database;
     int id = idInBase;
     String conNomer = conNomerInBase;
