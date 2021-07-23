@@ -1,7 +1,7 @@
 import 'package:cooler/calc.dart';
 import 'package:cooler/titlepage.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
+
 import 'db.dart';
 import 'modelToSave.dart';
 import 'dart:math' as math;
@@ -156,7 +156,6 @@ class AdmPageQState extends State<HomePgNEW>{
                                                                     height: 40,
                                                                     width: 165,
                                                                    margin: EdgeInsets.all(10.10),
-                                                                   // alignment: Alignment.bottomCenter,
                                                                        child:TextField(
                                                                         decoration: InputDecoration(
                                                                         hintText: item.nameCon,
@@ -182,7 +181,6 @@ class AdmPageQState extends State<HomePgNEW>{
                                                                      onPressed:() async{
                                                                        DBProvider.db.idInBase =  item.id;
                                                                        DBProvider.db.conNomerInBase = item.conNomer;
-                                                                       //DBProvider.db.nameConInBase = item.nameCon;
                                                                        await DBProvider.db.getMarka(DBProvider.db.newMarka);
                                                                        setState(() {});
                                                                      }
@@ -223,11 +221,10 @@ class AdmPageQState extends State<HomePgNEW>{
                                                                      // alignment: Alignment.bottomCenter,
                                                                      child:TextField(
                                                                        decoration: InputDecoration(
-                                                                         hintText: item.conNomer, // hintText: item.conNomer.toString(),
+                                                                         hintText: item.conNomer,
                                                                        ),
                                                                        onSubmitted: (text) {
                                                                          model = text;
-                                                                         // PassProverca.b = text;  берется в перемен
                                                                        },
                                                                        textAlign: TextAlign.center,
                                                                        style: TextStyle(
@@ -247,7 +244,6 @@ class AdmPageQState extends State<HomePgNEW>{
                                                                        onPressed:()async{
                                                                          DBProvider.db.idInBase =  item.id;
                                                                          DBProvider.db.nameConInBase = item.nameCon;
-                                                                       //  print('добавление модели ' + DBProvider.db.getAlltoSAVE());
                                                                          await DBProvider.db.getModel(DBProvider.db.newModel);
                                                                          setState(() {});
 
@@ -291,7 +287,6 @@ class AdmPageQState extends State<HomePgNEW>{
             onPressed: () async{
               ContainerCooler random = testCon[math.Random().nextInt(testCon.length)];
               await DBProvider.db.newContainerCooler(random);
-             // print(DBProvider.db.newContainerCooler(random));
               setState(() {});
             },
             child: const Icon(Icons.add,
