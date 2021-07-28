@@ -18,7 +18,7 @@ class PassProverca{
 int nomerCon = 1;
 int nomerYa = 0;
 
- List<Widget> newPageString = [] ;
+ List<Widget> newPageString = [] ; //для SharedPref
 
  saveInMemoryOll()async{
    SharedPreferences pr = await SharedPreferences.getInstance();

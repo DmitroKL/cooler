@@ -1,4 +1,5 @@
 import 'package:cooler/calc.dart';
+import 'package:cooler/montagList.dart';
 import 'package:cooler/titlepage.dart';
 import 'package:flutter/material.dart';
 
@@ -28,8 +29,16 @@ class AdmPageQState extends State<HomePgNEW>{
         home: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.indigo,
-            title: Text(" 2 test"),
+            title: Text("Кондиционеры"),
             centerTitle: true,
+            actions: [
+              IconButton(
+                  icon: Icon(Icons.list),
+                  tooltip: 'Переход на общую базу монтажных работ',
+                  onPressed:(){
+                    runApp(Montag());//open new list
+                  })
+            ],
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_outlined,
@@ -56,15 +65,16 @@ class AdmPageQState extends State<HomePgNEW>{
                 ),
 
                 Center(
+                  
                    child: FutureBuilder<List<ContainerCooler>>(
                         future: DBProvider.db.getAllContainerCoolersss(),
                         builder: (BuildContext context, AsyncSnapshot<List<ContainerCooler>> snapshot) {
                         if (snapshot.hasData) {
-                        return ListView.separated(
+                        return ListView.builder(
                             itemCount: snapshot.data.length,
-                            separatorBuilder:(_,__)=> Text(
-                                "------------uh---"
-                            ),
+                            //separatorBuilder:(_,__)=> Text(
+                            //   "------------uh---"
+                           // ),
                             itemBuilder: (BuildContext context, int index) {
                             ContainerCooler item = snapshot.data[index];
                             return Dismissible(
@@ -74,29 +84,35 @@ class AdmPageQState extends State<HomePgNEW>{
                                   DBProvider.db.deleteContainerCooler(item.id);
                                   setState(() {});
                                    },
-                               child:Container(
-                                 width: 520.0,
-                                 height: 70.0,
-                                 decoration: BoxDecoration(
-                                     borderRadius: BorderRadius.circular(10.0),
+                               child: Column(
+                                children:[
+                                  Container(
+                                    //width: 500.0,
+                                    height: 10.0
+                                  ),
+                                  Container(
+                                   width: 500.0,
+                                   height: 70.0,
+                                   decoration: BoxDecoration(
+                                     borderRadius: BorderRadius.circular(20.0),
                                      gradient: LinearGradient(colors: [
-                                       Colors.cyan[50],
-                                       Colors.cyan[100]
+                                       Colors.cyan[200],
+                                       Colors.cyan[50]
                                      ]
                                      )
                                  ),
                                  alignment: Alignment.bottomCenter,
-                                 child:ListTile(
-                                  title: Text(
+                                    child:ListTile(
+                                      title: Text(
                                       item.conNomer, // item.conNomer.toString(), был инт
                                     style: TextStyle(
                                       color: Colors.blue[900],
-                                      fontSize: 25,
+                                      fontSize: 26,
                                       fontWeight: FontWeight.w500,
                                       letterSpacing: 1,
                                     ),
                                   ),
-                                  subtitle: Text(
+                                      subtitle: Text(
                                       item.nameCon,
                                       style: TextStyle(
                                        color: Colors.blue[900],
@@ -105,12 +121,26 @@ class AdmPageQState extends State<HomePgNEW>{
                                         letterSpacing: 1,
                                   ),
                                   ),
-                                     leading: Text(item.id.toString()),
-                                    trailing: IconButton(
-                                      icon:Icon(
+                                       leading: Text(item.id.toString()),
+                                      trailing:
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              IconButton(
+                                                  icon: Icon(
+                                                    Icons.arrow_forward,
+                                                 //   size: 20,
+                                                  ),
+                                                  onPressed: (){
+                                                    print("knopka");
+                                                  }
+                                              ),
+
+                                      IconButton(
+                                        icon:Icon(
                                          Icons.assignment
                                       ),
-                                     onPressed:(){   //DIALOG !!!!!!!! TYT
+                                       onPressed:(){   //DIALOG !!!!!!!! TYT
                                        showDialog(
                                            context: context,
                                            builder: (context){
@@ -265,8 +295,17 @@ class AdmPageQState extends State<HomePgNEW>{
 
                                       }
                                    )
+
+
+
+                                            ],
+                                          )
+
+
                               ),
                                ),
+                              ]
+                            ),
                             );
 
                          }

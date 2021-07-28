@@ -109,7 +109,7 @@ class FirstPage extends StatelessWidget{
                       onPressed: () {
                         PassProverca.b = null;
                      //   print(" by admin pressed");
-                        writeMemoryFirstifNULL();
+                        writeMemoryFirstifNULL(); // для SharedPref перед заходом на след стр
                         runApp(PassByAdmin());
                       },
                       child: Text(
