@@ -1,12 +1,10 @@
 import 'package:cooler/calc.dart';
-import 'package:cooler/titlepage.dart';
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
 import 'admPageFirstNEW.dart';
-import 'db.dart';
 import 'dbMontag.dart';
 import 'modelMontagToSave.dart';
-import 'modelToSave.dart';
+
 import 'dart:math' as math;
 
 class Montag extends StatefulWidget{
