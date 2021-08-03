@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'admPageFirstNEW.dart';
 import 'db.dart';
+import 'dbMontag.dart';
+import 'modelMontagToSave.dart';
 import 'modelToSave.dart';
 import 'dart:math' as math;
 
@@ -14,9 +16,9 @@ class Montag extends StatefulWidget{
 }
 
 class AdmPageQState extends State<Montag>{
-  List<ContainerCooler> testCon = [
-    ContainerCooler(conNomer: '23', nameCon: "Reinter", nomerYaCon: 1),
-    ContainerCooler(conNomer: '250', nameCon: "Samsung", nomerYaCon: 1),
+  List<ContainerMontag> testMontCon = [
+    ContainerMontag(nazvanRab: 'Установка', stoimost: "1000", nomerYaCon: 1),
+    ContainerMontag(nazvanRab: 'Ремонт', stoimost: "3400", nomerYaCon: 1),
   ];
 
 
@@ -66,9 +68,9 @@ class AdmPageQState extends State<Montag>{
 
                 Center(
 
-                  child: FutureBuilder<List<ContainerCooler>>(
-                    future: DBProvider.db.getAllContainerCoolersss(),
-                    builder: (BuildContext context, AsyncSnapshot<List<ContainerCooler>> snapshot) {
+                  child: FutureBuilder<List<ContainerMontag>>(
+                    future: DBMontag.db.getAllMontagCoolers(),
+                    builder: (BuildContext context, AsyncSnapshot<List<ContainerMontag>> snapshot) {
                       if (snapshot.hasData) {
                         return ListView.builder(
                             itemCount: snapshot.data.length,
@@ -76,12 +78,12 @@ class AdmPageQState extends State<Montag>{
                             //   "------------uh---"
                             // ),
                             itemBuilder: (BuildContext context, int index) {
-                              ContainerCooler item = snapshot.data[index];
+                              ContainerMontag item = snapshot.data[index];
                               return Dismissible(
                                 key: UniqueKey(),
                                 background: Container(color: Colors.red),
                                 onDismissed: (direction) {
-                                  DBProvider.db.deleteContainerCooler(item.id);
+                                  DBMontag.db.deleteContainerMontag(item.id);
                                   setState(() {});
                                 },
                                 child: Column(
@@ -104,7 +106,7 @@ class AdmPageQState extends State<Montag>{
                                         alignment: Alignment.bottomCenter,
                                         child:ListTile(
                                             title: Text(
-                                              item.conNomer, // item.conNomer.toString(), был инт
+                                              item.nazvanRab, // item.conNomer.toString(), был инт
                                               style: TextStyle(
                                                 color: Colors.blue[900],
                                                 fontSize: 26,
@@ -113,7 +115,7 @@ class AdmPageQState extends State<Montag>{
                                               ),
                                             ),
                                             subtitle: Text(
-                                              item.nameCon,
+                                              item.stoimost,
                                               style: TextStyle(
                                                 color: Colors.blue[900],
                                                 fontSize: 15,
@@ -126,6 +128,7 @@ class AdmPageQState extends State<Montag>{
                                             Row(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
+                                                /*
                                                 IconButton(
                                                     icon: Icon(
                                                       Icons.arrow_forward,
@@ -135,7 +138,7 @@ class AdmPageQState extends State<Montag>{
                                                       print("knopka");
                                                     }
                                                 ),
-
+                                                 */
                                                 IconButton(
                                                     icon:Icon(
                                                         Icons.assignment
@@ -162,7 +165,6 @@ class AdmPageQState extends State<Montag>{
                                                                     Container(
                                                                       height: 80,
                                                                       width: 250,
-                                                                      // color: Colors.cyan,
                                                                       decoration: BoxDecoration(
                                                                           borderRadius: BorderRadius.circular(10.0),
                                                                           gradient: LinearGradient(colors: [
@@ -173,7 +175,7 @@ class AdmPageQState extends State<Montag>{
                                                                       ),
                                                                       child:Column(
                                                                         children: [
-                                                                          Text('Марка',
+                                                                          Text('Стоимость',
                                                                               style:TextStyle(
                                                                                 fontSize: 16,
                                                                                 fontWeight: FontWeight.w500,
@@ -188,10 +190,10 @@ class AdmPageQState extends State<Montag>{
                                                                                   margin: EdgeInsets.all(10.10),
                                                                                   child:TextField(
                                                                                     decoration: InputDecoration(
-                                                                                      hintText: item.nameCon,
+                                                                                      hintText: item.stoimost,
                                                                                     ),
                                                                                     onSubmitted: (text)  {
-                                                                                      marka = text;
+                                                                                      stoimostCalc = text;
                                                                                     },
                                                                                     textAlign: TextAlign.center,
                                                                                     style: TextStyle(
@@ -209,9 +211,9 @@ class AdmPageQState extends State<Montag>{
                                                                                       color: Colors.red,
                                                                                     ),
                                                                                     onPressed:() async{
-                                                                                      DBProvider.db.idInBase =  item.id;
-                                                                                      DBProvider.db.conNomerInBase = item.conNomer;
-                                                                                      await DBProvider.db.getMarka(DBProvider.db.newMarka);
+                                                                                      DBMontag.db.idInBase =  item.id;
+                                                                                      DBMontag.db.nazvanRabInBase = item.nazvanRab;
+                                                                                      await DBMontag.db.getstoimost(DBMontag.db.newStoimost);
                                                                                       setState(() {});
                                                                                     }
 
@@ -235,7 +237,7 @@ class AdmPageQState extends State<Montag>{
                                                                       ),
                                                                       child:Column(
                                                                         children: [
-                                                                          Text('Модель',
+                                                                          Text('Название работы',
                                                                               style:TextStyle(
                                                                                 fontSize: 16,
                                                                                 fontWeight: FontWeight.w500,
@@ -251,10 +253,10 @@ class AdmPageQState extends State<Montag>{
                                                                                   // alignment: Alignment.bottomCenter,
                                                                                   child:TextField(
                                                                                     decoration: InputDecoration(
-                                                                                      hintText: item.conNomer,
+                                                                                      hintText: item.nazvanRab,
                                                                                     ),
                                                                                     onSubmitted: (text) {
-                                                                                      model = text;
+                                                                                      nazvanRabCalc = text;
                                                                                     },
                                                                                     textAlign: TextAlign.center,
                                                                                     style: TextStyle(
@@ -272,11 +274,10 @@ class AdmPageQState extends State<Montag>{
                                                                                       color: Colors.red,
                                                                                     ),
                                                                                     onPressed:()async{
-                                                                                      DBProvider.db.idInBase =  item.id;
-                                                                                      DBProvider.db.nameConInBase = item.nameCon;
-                                                                                      await DBProvider.db.getModel(DBProvider.db.newModel);
+                                                                                      DBMontag.db.idInBase =  item.id;
+                                                                                      DBMontag.db.stoimostInBase = item.stoimost;
+                                                                                      await DBMontag.db.getnazvanRab(DBMontag.db.newRab);
                                                                                       setState(() {});
-
                                                                                     }
                                                                                 ),
                                                                               ]
@@ -324,8 +325,8 @@ class AdmPageQState extends State<Montag>{
 
           floatingActionButton: FloatingActionButton(
             onPressed: () async{
-              ContainerCooler random = testCon[math.Random().nextInt(testCon.length)];
-              await DBProvider.db.newContainerCooler(random);
+              ContainerMontag random = testMontCon[math.Random().nextInt(testMontCon.length)];
+              await DBMontag.db.newMontagCooler(random);
               setState(() {});
             },
             child: const Icon(Icons.add,

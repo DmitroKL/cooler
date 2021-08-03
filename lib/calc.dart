@@ -6,8 +6,10 @@ import 'db.dart';
 
 var listSAVE = ContainerCooler();
 
- String marka='marka-null' ;
+String stoimostCalc = 'stoimost-null';
+String nazvanRabCalc = 'nazvanRab-null';
 
+String marka='marka-null' ;
 String model = 'model-null';
 
 class PassProverca{
