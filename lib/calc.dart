@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'db.dart';
 
+var fromname = "null - from card coolers";
+
 var listSAVE = ContainerCooler();
 
 String stoimostCalc = 'stoimost-null';

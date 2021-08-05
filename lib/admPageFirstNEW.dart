@@ -3,6 +3,7 @@ import 'package:cooler/montagList.dart';
 import 'package:cooler/titlepage.dart';
 import 'package:flutter/material.dart';
 
+import 'coolerMainForMontag.dart';
 import 'db.dart';
 import 'modelToSave.dart';
 import 'dart:math' as math;
@@ -133,6 +134,8 @@ class AdmPageQState extends State<HomePgNEW>{
                                                   ),
                                                   onPressed: (){
                                                     print("knopka");
+                                                    fromname= item.nameCon;
+                                                    runApp(CoolerMainMontag());
                                                   }
                                               ),
 
