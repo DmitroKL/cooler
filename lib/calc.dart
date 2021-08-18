@@ -3,10 +3,28 @@ import 'package:cooler/partition.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'db.dart';
+import 'dbChange.dart';
+import 'dbChange.dart';
 
-var fromname = "null - from card coolers";
+var connamedvepaytNol='250'; //primer
+
+
+
+var fromname = "null - from card coolers";   //марка
+var frommodel = "null - from card coolers"; //модель
+
+// ignore: non_constant_identifier_names
+var Frut = "sdd";
+/*
+class FromModeltoMontag{
+  var fr = "null - from card coolers";
+}
+ */
 
 var listSAVE = ContainerCooler();
+
+
+
 
 String stoimostCalc = 'stoimost-null';
 String nazvanRabCalc = 'nazvanRab-null';

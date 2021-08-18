@@ -116,28 +116,6 @@ class DBProvider {
   }
 
 
-/*
-  newMarka(ContainerCooler newContainerCooler) async {
-    final db = await database;
-    int id = idInBase;
-
-        var res = await db.query("ContainerCooler", where: "id = ?", whereArgs: [id]);
-      return res.isNotEmpty ? ContainerCooler.fromMap(res.first) : null;
-     // print(res);
-
-
-
-
-    var raw = await db.rawInsert(
-        "INSERT Into ContainerCooler (id,conNomer,nameCon,nomerYaCon)"
-            " VALUES (?,?,?,?)",
-        [id, newContainerCooler.conNomer, newContainerCooler.nameCon, newContainerCooler.nomerYaCon]);
-    return raw;
-  }
-
-
- */
-
   Future<List<ContainerCooler>> getAllContainerCoolersss() async {
     final db = await database;
     var res = await db.query("ContainerCooler");
@@ -159,23 +137,6 @@ class DBProvider {
     return listtoSAVE;
 
   }
-/*
-  Future<List<ContainerCooler>> getAllProducts() async {
-    final db = await database;
-    List<Map>
-    results = await db.query(
-        "ContainerCooler", columns: ContainerCooler.columns, orderBy: "id ASC");//"Product", columns: ContainerCooler.columns, orderBy: "id ASC");
-
-    List<ContainerCooler> products = new List();
-    results.forEach((result) {
-      ContainerCooler product = ContainerCooler.fromMap(result);
-      products.add(product);
-    });
-    return products;
-  }
-
-
- */
 }
 
 

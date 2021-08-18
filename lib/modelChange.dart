@@ -1,4 +1,7 @@
-class ContainerMontag{          //ContainerCooler
+
+
+
+class ContainerMontag{          // frommodel  из item. возможно с большой буквы название?
   final int id;
   final String nazvanRab;
   final String stoimost;

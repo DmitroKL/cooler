@@ -2,6 +2,7 @@ import 'package:cooler/calc.dart';
 
 import 'package:flutter/material.dart';
 import 'admPageFirstNEW.dart';
+import 'dbChange.dart';
 import 'dbMontag.dart';
 import 'modelMontagToSave.dart';
 
@@ -14,10 +15,16 @@ class Montag extends StatefulWidget{
 }
 
 class AdmPageQState extends State<Montag>{
-  List<ContainerMontag> testMontCon = [
-    ContainerMontag(nazvanRab: 'Установка', stoimost: "1000", nomerYaCon: 1),
-    ContainerMontag(nazvanRab: 'Ремонт', stoimost: "3400", nomerYaCon: 1),
+
+  List<ContainerMontag> tes = [
+    ContainerMontag(nazvanRab: 'dfdh', stoimost: "4567", nomerYaCon: "1")
   ];
+
+  List<ContainerMontag> testMontCon = [
+    ContainerMontag(nazvanRab: 'Установка', stoimost: "1000", nomerYaCon: "1"),
+    ContainerMontag(nazvanRab: 'Ремонт', stoimost: "3400", nomerYaCon: "1"),
+  ];
+
 
 
 
@@ -71,12 +78,14 @@ class AdmPageQState extends State<Montag>{
                     builder: (BuildContext context, AsyncSnapshot<List<ContainerMontag>> snapshot) {
                       if (snapshot.hasData) {
                         return ListView.builder(
+
                             itemCount: snapshot.data.length,
                             //separatorBuilder:(_,__)=> Text(
                             //   "------------uh---"
                             // ),
                             itemBuilder: (BuildContext context, int index) {
                               ContainerMontag item = snapshot.data[index];
+                             // if (item.stoimost =="1000");
                               return Dismissible(
                                 key: UniqueKey(),
                                 background: Container(color: Colors.red),
@@ -104,7 +113,8 @@ class AdmPageQState extends State<Montag>{
                                         alignment: Alignment.bottomCenter,
                                         child:ListTile(
                                             title: Text(
-                                              item.nazvanRab, // item.conNomer.toString(), был инт
+                                              item.nazvanRab,
+                                                // if item.stoimost =="1000",// item.conNomer.toString(), был инт
                                               style: TextStyle(
                                                 color: Colors.blue[900],
                                                 fontSize: 26,
@@ -126,17 +136,26 @@ class AdmPageQState extends State<Montag>{
                                             Row(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                /*
+
                                                 IconButton(
                                                     icon: Icon(
-                                                      Icons.arrow_forward,
+                                                      Icons.add_circle,
                                                       //   size: 20,
                                                     ),
-                                                    onPressed: (){
-                                                      print("knopka");
-                                                    }
+                                                    onPressed: ()
+                                                  //    print("knopka");
+
+                                                      async{
+                                               // DBChange.db.idInBase =  item.id;
+                                                DBChange.db.nazvanRabNEW = item.nazvanRab;
+                                                DBChange.db.stoimostNEW = item.stoimost;
+                                                DBChange.db.nomerYaConNEW =connamedvepaytNol ;
+                                                await DBChange.db.newMontagCooler(DBChange.db.newChangeCon);
+                                                        setState(() {});
+
+                                                    },
                                                 ),
-                                                 */
+
                                                 IconButton(
                                                     icon:Icon(
                                                         Icons.assignment
@@ -323,6 +342,8 @@ class AdmPageQState extends State<Montag>{
 
           floatingActionButton: FloatingActionButton(
             onPressed: () async{
+
+
               ContainerMontag random = testMontCon[math.Random().nextInt(testMontCon.length)];
               await DBMontag.db.newMontagCooler(random);
               setState(() {});

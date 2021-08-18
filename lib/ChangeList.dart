@@ -2,20 +2,21 @@ import 'package:cooler/calc.dart';
 
 import 'package:flutter/material.dart';
 import 'admPageFirstNEW.dart';
+import 'dbChange.dart';
 import 'dbMontag.dart';
 import 'modelMontagToSave.dart';
 
 import 'dart:math' as math;
 
-class CoolerMainMontag extends StatefulWidget{
+class ChangeListMontag extends StatefulWidget{
   @override
-  AdmPageQState createState()=>AdmPageQState();
+  ListChange createState()=>ListChange();
 }
-class AdmPageQState extends State<CoolerMainMontag>{
+class ListChange extends State<ChangeListMontag>{
 
   List<ContainerMontag> testMontCon = [
-    ContainerMontag(nazvanRab: 'Установка', stoimost: "1000", nomerYaCon: 1),
-    ContainerMontag(nazvanRab: 'Ремонт', stoimost: "3400", nomerYaCon: 1),
+    ContainerMontag(nazvanRab: 'Установка', stoimost: "1000", nomerYaCon: "1"),
+    ContainerMontag(nazvanRab: 'Ремонт', stoimost: "3400", nomerYaCon: "1"),
   ];
 
   @override
@@ -26,7 +27,7 @@ class AdmPageQState extends State<CoolerMainMontag>{
         home: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.indigo,
-            title: Text("$fromname"),
+            title: Text("$fromname - $frommodel"),
             centerTitle: true,
             /*
             actions: [
@@ -63,7 +64,8 @@ class AdmPageQState extends State<CoolerMainMontag>{
                 Center(
 
                   child: FutureBuilder<List<ContainerMontag>>(
-                    future: DBMontag.db.getAllMontagCoolers(),
+                    future: DBChange.db.getAllMontagCoolers(),
+                   // future: DBChange.getAllMontagCoolers(),
                     builder: (BuildContext context, AsyncSnapshot<List<ContainerMontag>> snapshot) {
                       if (snapshot.hasData) {
                         return ListView.builder(
@@ -77,7 +79,7 @@ class AdmPageQState extends State<CoolerMainMontag>{
                                 key: UniqueKey(),
                                 background: Container(color: Colors.red),
                                 onDismissed: (direction) {
-                                  DBMontag.db.deleteContainerMontag(item.id);
+                                  DBChange.db.deleteContainerMontag(item.id);
                                   setState(() {});
                                 },
                                 child: Column(
@@ -197,7 +199,7 @@ class AdmPageQState extends State<CoolerMainMontag>{
                                                                                     ),
                                                                                   ),
                                                                                 ),
-
+/*
                                                                                 IconButton(
                                                                                     icon:Icon(
                                                                                       Icons.add_circle,
@@ -210,8 +212,8 @@ class AdmPageQState extends State<CoolerMainMontag>{
                                                                                       await DBMontag.db.getstoimost(DBMontag.db.newStoimost);
                                                                                       setState(() {});
                                                                                     }
-
                                                                                 ),
+                                                                                */
                                                                               ]
                                                                           )
                                                                         ],
@@ -260,7 +262,7 @@ class AdmPageQState extends State<CoolerMainMontag>{
                                                                                     ),
                                                                                   ),
                                                                                 ),
-
+/*
                                                                                 IconButton(
                                                                                     icon:Icon(
                                                                                       Icons.add_circle,
@@ -274,6 +276,7 @@ class AdmPageQState extends State<CoolerMainMontag>{
                                                                                       setState(() {});
                                                                                     }
                                                                                 ),
+                                                                                */
                                                                               ]
                                                                           )
                                                                         ],
@@ -318,9 +321,13 @@ class AdmPageQState extends State<CoolerMainMontag>{
           ),
 
           floatingActionButton: FloatingActionButton(
-            onPressed: () async{
-              ContainerMontag random = testMontCon[math.Random().nextInt(testMontCon.length)];
-              await DBMontag.db.newMontagCooler(random);
+            onPressed: ()
+
+            async{
+
+           //   ContainerMontag random = testMontCon[math.Random().nextInt(testMontCon.length)];
+            //  await DBChange.db.newMontagCooler(random);
+
               setState(() {});
             },
             child: const Icon(Icons.add,
