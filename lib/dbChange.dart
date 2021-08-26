@@ -86,7 +86,7 @@ class DBChange {
           id,
           nazvanRabNEW,
           stoimostNEW,
-          nomerYaConNEW,
+          nomerYaConNEW, //250
         ]);
     return raw;
   }
@@ -127,6 +127,19 @@ class DBChange {
     return res;
   }
 */
+  /*
+  blockOrUnblock(ContainerMontag сontainerMontag) async {
+  final db = await database;
+  ContainerMontag blo = ContainerMontag(
+      id: сontainerMontag.id,
+      nazvanRab: сontainerMontag.nazvanRab,
+      stoimost: сontainerMontag.stoimost,
+      nomerYaCon: сontainerMontag.nomerYaCon); // nomerYaCon: !ContainerMontag.nomerYaCon
+  var res = await db.update("ContainerMontag", blo.toMap(),
+  where: "id = ?", whereArgs: [ContainerMontag.id]);
+  return res;
+}
+*/
    Future<List<ContainerMontag>> getAllMontagCoolers() async {  //
      final db = await database;
     var res = await db.query("ContainerMontag");
@@ -140,6 +153,18 @@ class DBChange {
     return db.delete("ContainerMontag", where: "id = ?", whereArgs: [id]);
   }
 
+  Future<List<ContainerMontag>> getForCoolerChange() async {
+ // getForCoolerChange() async {  //read only change
+    final db = await database;
+    print("work");
+    //var res = await db.rawQuery("SELECT * FROM ContainerMontag WHERE nomerYaCon=250");
+    var res = await db.query("ContainerMontag", where: "nomerYaCon = ? ", whereArgs: ["250"]);
+    List<ContainerMontag> list =
+    //res.isNotEmpty ? res.toList().map((c) => ContainerMontag.fromMap(c)) : null;
+    res.isNotEmpty ? res.map((c) => ContainerMontag.fromMap(c)).toList() : [];
+    return list;
+  }
+/*
   getAlltoSAVE( ) async {
     final db = await database;
     var res = await db.rawQuery('list');
@@ -148,6 +173,6 @@ class DBChange {
     return listtoSAVE;
 
   }
-
+*/
 
 }
