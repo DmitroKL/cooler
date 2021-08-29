@@ -158,9 +158,10 @@ class DBMontag {
   getAllClients() async {
     final db = await database;
     var res = await db.query("ContainerMontag");
-    List<ContainerMontag> list =
-    res.isNotEmpty ? res.map((c) => ContainerMontag.fromMap(c)).toList() : [];
-    return list;
+   // List<ContainerMontag> list =
+   // res.isNotEmpty ? res.map((c) => ContainerMontag.fromMap(c)).toList() : [];
+    //for (var item in map)
+    return print(res);
   }
 
 

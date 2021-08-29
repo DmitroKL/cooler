@@ -1,4 +1,5 @@
 import 'package:cooler/calc.dart';
+import 'package:cooler/db.dart';
 
 import 'package:flutter/material.dart';
 import 'admPageFirstNEW.dart';
@@ -7,6 +8,8 @@ import 'dbMontag.dart';
 import 'modelMontagToSave.dart';
 
 import 'dart:math' as math;
+
+import 'modelToSave.dart';
 
 class Montag extends StatefulWidget{
 
@@ -78,14 +81,9 @@ class AdmPageQState extends State<Montag>{
                     builder: (BuildContext context, AsyncSnapshot<List<ContainerMontag>> snapshot) {
                       if (snapshot.hasData) {
                         return ListView.builder(
-
                             itemCount: snapshot.data.length,
-                            //separatorBuilder:(_,__)=> Text(
-                            //   "------------uh---"
-                            // ),
                             itemBuilder: (BuildContext context, int index) {
                               ContainerMontag item = snapshot.data[index];
-                             // if (item.stoimost =="1000");
                               return Dismissible(
                                 key: UniqueKey(),
                                 background: Container(color: Colors.red),
@@ -142,18 +140,123 @@ class AdmPageQState extends State<Montag>{
                                                       Icons.add_circle,
                                                       //   size: 20,
                                                     ),
-                                                    onPressed: ()
-                                                  //    print("knopka");
+                                                    onPressed: (){
+                                                      DBChange.db.nazvanRabNEW = item.nazvanRab;
+                                                      DBChange.db.stoimostNEW = item.stoimost;
+                                                     showDialog(
+                                                         context: context,
+                                                         builder: (context)
+                                                     {
+                                                       return Dialog(
+                                                           child: Container(
+                                                           // alignment: Alignment.center ,
+                                                            padding: EdgeInsets.all(20),
+                                                           height: 360,
+                                                           width: 550,
+                                                            child: Center(
 
-                                                      async{
+                                                              child: FutureBuilder<List<ContainerCooler>>(
+                                                                future: DBProvider.db.getAllContainerCoolersss(),
+                                                                builder: (BuildContext context, AsyncSnapshot<List<ContainerCooler>> snapshot) {
+                                                                  if (snapshot.hasData) {
+                                                                    return ListView.builder(
+                                                                        itemCount: snapshot.data.length,
+                                                                        itemBuilder: (BuildContext context, int index) {
+                                                                          ContainerCooler item = snapshot.data[index];
+                                                                          return Dismissible(
+                                                                            key: UniqueKey(),
+
+                                                                            child: Column(
+                                                                                children:[
+                                                                                  Container(
+                                                                                      height: 10.0
+                                                                                  ),
+                                                                                  Container(
+                                                                                   // width: 500.0,
+                                                                                   // height: 70.0,
+                                                                                    decoration: BoxDecoration(
+                                                                                        borderRadius: BorderRadius.circular(20.0),
+                                                                                        gradient: LinearGradient(colors: [
+                                                                                          Colors.cyan[200],
+                                                                                          Colors.cyan[50]
+                                                                                        ]
+                                                                                        )
+                                                                                    ),
+                                                                                    alignment: Alignment.bottomCenter,
+                                                                                    child:ListTile(
+                                                                                      title: Text(
+                                                                                        item.conNomer,
+                                                                                        style: TextStyle(
+                                                                                          color: Colors.blue[900],
+                                                                                         // fontSize: 26,
+                                                                                          fontSize: 20,
+                                                                                          fontWeight: FontWeight.w500,
+                                                                                          letterSpacing: 1,
+                                                                                        ),
+                                                                                      ),
+                                                                                      subtitle: Text(
+                                                                                        item.nameCon,
+                                                                                        style: TextStyle(
+                                                                                          color: Colors.blue[900],
+                                                                                        //  fontSize: 15,
+                                                                                          fontSize: 15,
+                                                                                          fontWeight: FontWeight.w500,
+                                                                                          letterSpacing: 1,
+                                                                                        ),
+                                                                                      ),
+                                                                                      leading: Text(item.id.toString()),
+                                                                                      trailing: IconButton(
+                                                                                        icon:Icon(
+                                                                                            Icons.add_circle,
+                                                                                          color:Colors.deepOrange,
+                                                                                          size: 50,
+                                                                                        ),
+                                                                                        onPressed:()
+                                                                                        async{
+                                                                                          DBChange.db.nomerYaConNEW = item.conNomer;
+                                                                                          await DBChange.db.newMontagCooler(DBChange.db.newChangeCon);
+                                                                                          setState(() {});
+                                                                                          },
+                                                                                      )
+
+                                                                                    ),
+                                                                                  ),
+                                                                                ]
+                                                                            ),
+                                                                          );
+
+                                                                        }
+                                                                    );
+
+                                                                  } else {
+                                                                    return Center(child: CircularProgressIndicator(
+
+                                                                    ));
+                                                                  }
+                                                                },
+
+                                                              ),
+
+
+
+
+                                                       )
+
+                                                           )
+                                                       );
+                                                     }
+                                                     );
+                                                         },
+                                                    /*
+                                                      async{    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!! добавить таблицу с выбором какого имеено кондиционера
                                                // DBChange.db.idInBase =  item.id;
                                                 DBChange.db.nazvanRabNEW = item.nazvanRab;
                                                 DBChange.db.stoimostNEW = item.stoimost;
                                                 DBChange.db.nomerYaConNEW =connamedvepaytNol ;
                                                 await DBChange.db.newMontagCooler(DBChange.db.newChangeCon);
                                                         setState(() {});
-
                                                     },
+                                                     */
                                                 ),
 
                                                 IconButton(
@@ -341,13 +444,18 @@ class AdmPageQState extends State<Montag>{
           ),
 
           floatingActionButton: FloatingActionButton(
+
             onPressed: () async{
-
-
               ContainerMontag random = testMontCon[math.Random().nextInt(testMontCon.length)];
               await DBMontag.db.newMontagCooler(random);
               setState(() {});
             },
+
+            /*
+            onPressed: () async{
+              await DBMontag.db.getAllClients();
+            },
+*/
             child: const Icon(Icons.add,
                 size: 40.0),
             backgroundColor: Colors.indigo,

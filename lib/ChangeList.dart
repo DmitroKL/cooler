@@ -64,15 +64,11 @@ class ListChange extends State<ChangeListMontag>{
                 Center(
 
                   child: FutureBuilder<List<ContainerMontag>>(
-                  //  future: DBChange.db.getAllMontagCoolers(),
                     future: DBChange.db.getForCoolerChange(),
                     builder: (BuildContext context, AsyncSnapshot<List<ContainerMontag>> snapshot) {
                       if (snapshot.hasData) {
                         return ListView.builder(
                             itemCount: snapshot.data.length,
-                            //separatorBuilder:(_,__)=> Text(
-                            //   "------------uh---"
-                            // ),
                             itemBuilder: (BuildContext context, int index) {
                               ContainerMontag item = snapshot.data[index];
                               return Dismissible(
@@ -120,6 +116,7 @@ class ListChange extends State<ChangeListMontag>{
                                               ),
                                             ),
                                             leading: Text(item.id.toString()),
+                                           /*
                                             trailing:
                                             Row(
                                               mainAxisSize: MainAxisSize.min,
@@ -135,6 +132,7 @@ class ListChange extends State<ChangeListMontag>{
                                                     }
                                                 ),
                                                  */
+
                                                 IconButton(
                                                     icon:Icon(
                                                         Icons.assignment
@@ -298,7 +296,7 @@ class ListChange extends State<ChangeListMontag>{
 
                                               ],
                                             )
-
+*/
 
                                         ),
                                       ),

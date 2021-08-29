@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'ChangeList.dart';
 import 'db.dart';
+import 'dbChange.dart';
 import 'modelToSave.dart';
 import 'dart:math' as math;
 
@@ -134,8 +135,9 @@ class AdmPageQState extends State<HomePgNEW>{
                                                   ),
                                                   onPressed: (){
                                                     print("knopka");
-                                                    fromname= item.nameCon;
+                                                    fromname=item.nameCon;
                                                     frommodel=item.conNomer;
+                                                    DBChange.db.nomerYaConNEW =item.conNomer;
                                                   //  FromModeltoMontag.fr=item.conNomer ;
                                                     runApp(ChangeListMontag());
                                                   }
