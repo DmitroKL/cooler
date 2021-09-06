@@ -14,6 +14,7 @@ class DBProvider {
   int idInBase;
   String conNomerInBase;
   String nameConInBase;
+  String cvetNEW; // new
 
   static final DBProvider db = DBProvider._();
   Database _database;
@@ -52,7 +53,8 @@ class DBProvider {
               "id INTEGER PRIMARY KEY,"
               "conNomer TEXT,"
               "nameCon TEXT,"
-              "nomerYaCon INTEGER"
+              "nomerYaCon INTEGER,"
+              "cvet TEXT"
               ")"
           );
 
@@ -67,13 +69,14 @@ class DBProvider {
     int id = table.first["id"];
     //insert to the table using the new id
     var raw = await db.rawInsert(
-        "INSERT Into ContainerCooler (id,conNomer,nameCon,nomerYaCon)"
-            " VALUES (?,?,?,?)",
+        "INSERT Into ContainerCooler (id,conNomer,nameCon,nomerYaCon,cvet)"
+            " VALUES (?,?,?,?,?)",
         [
           id,
           newContainerCooler.conNomer,
           newContainerCooler.nameCon,
-          newContainerCooler.nomerYaCon
+          newContainerCooler.nomerYaCon,
+          newContainerCooler.cvet
         ]);
     return raw;
   }
@@ -84,14 +87,15 @@ class DBProvider {
     String conNomer = conNomerInBase;
     db.delete("ContainerCooler", where: "id = ?", whereArgs: [idInBase]);
     var res = await db.rawInsert(
-        "INSERT Into ContainerCooler (id,conNomer,nameCon,nomerYaCon)"
-            " VALUES (?,?,?,?)",
+        "INSERT Into ContainerCooler (id,conNomer,nameCon,nomerYaCon,cvet)"
+            " VALUES (?,?,?,?,?)",
         [
           id,
           conNomer,
           marka,
           // newContainerCooler.nameCon,
-          newContainerCooler.nomerYaCon
+          newContainerCooler.nomerYaCon,
+          cvetNEW,
         ]);
     return res;
   }
@@ -103,14 +107,15 @@ class DBProvider {
     //int conNomer =conNomerInBase;
     db.delete("ContainerCooler", where: "id = ?", whereArgs: [idInBase]);
     var res = await db.rawInsert(
-        "INSERT Into ContainerCooler (id,conNomer,nameCon,nomerYaCon)"
-            " VALUES (?,?,?,?)",
+        "INSERT Into ContainerCooler (id,conNomer,nameCon,nomerYaCon,cvet)"
+            " VALUES (?,?,?,?,?)",
         [
           id,
           model,
           nameCon,
           // newContainerCooler.nameCon,
-          newContainerCooler.nomerYaCon
+          newContainerCooler.nomerYaCon,
+          cvetNEW,
         ]);
     return res;
   }

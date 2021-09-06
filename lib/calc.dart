@@ -8,7 +8,7 @@ import 'dbChange.dart';
 
 var connamedvepaytNol='250'; //primer
 
-
+var cvetNewFor = Colors.black12;
 
 var fromname = "null - from card coolers";   //марка
 var frommodel = "null - from card coolers"; //модель
@@ -24,13 +24,16 @@ class FromModeltoMontag{
 var listSAVE = ContainerCooler();
 
 
-
+String cvetglavnCon  ;
+//var cvetDlyaPageFirst  = Colors.black12;
+var cvetDlyaPageFirst  ;
 
 String stoimostCalc = 'stoimost-null';
 String nazvanRabCalc = 'nazvanRab-null';
 
 String marka='marka-null' ;
 String model = 'model-null';
+//String cvetTooDB='model - null';
 
 class PassProverca{
   static var pass = "a";

@@ -1,6 +1,8 @@
 import 'package:cooler/calc.dart';
+import 'package:cooler/dbOperator.dart';
 import 'package:cooler/montagList.dart';
 import 'package:cooler/titlepage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'ChangeList.dart';
@@ -17,8 +19,8 @@ class HomePgNEW extends StatefulWidget{
 
 class AdmPageQState extends State<HomePgNEW>{
   List<ContainerCooler> testCon = [
-    ContainerCooler(conNomer: '23', nameCon: "Reinter", nomerYaCon: 1),
-    ContainerCooler(conNomer: '250', nameCon: "Samsung", nomerYaCon: 1),
+    ContainerCooler(conNomer: '23', nameCon: "Reinter", nomerYaCon: 1, cvet: "■"), //код 254 - ■ , 17  - ◄, 2- ☻
+    ContainerCooler(conNomer: '250', nameCon: "Samsung", nomerYaCon: 1,cvet: "■"),
   ];
 
 
@@ -74,11 +76,9 @@ class AdmPageQState extends State<HomePgNEW>{
                         if (snapshot.hasData) {
                         return ListView.builder(
                             itemCount: snapshot.data.length,
-                            //separatorBuilder:(_,__)=> Text(
-                            //   "------------uh---"
-                           // ),
                             itemBuilder: (BuildContext context, int index) {
                             ContainerCooler item = snapshot.data[index];
+                           // cvetDlyaPageFirst = item.cvet;
                             return Dismissible(
                                  key: UniqueKey(),
                                   background: Container(color: Colors.red),
@@ -98,13 +98,76 @@ class AdmPageQState extends State<HomePgNEW>{
                                    decoration: BoxDecoration(
                                      borderRadius: BorderRadius.circular(20.0),
                                      gradient: LinearGradient(colors: [
+                                      // Colors.cyan[200],
                                        Colors.cyan[200],
                                        Colors.cyan[50]
                                      ]
                                      )
-                                 ),
-                                 alignment: Alignment.bottomCenter,
+                                  ),
+                                  alignment: Alignment.bottomCenter,
                                     child:ListTile(
+                                      onLongPress: (){
+                                        DBOperator.db.operModel= item.conNomer;
+                                        DBOperator.db.operMarka= item.nameCon;
+                                        DBOperator.db.operCvet= item.cvet ;
+                                        DBOperator.db.newCoolerTooOper(DBOperator.db.newOperCon);
+                                        print('knopks konter');
+
+                                        showDialog(
+                                        context: context,
+                                       builder: (context){
+                                              return Dialog(
+                                                child: Container(
+                                                   height: 80,
+                                                   width: 100,
+
+                                                   child: Column(
+                                                      children: [
+                                                        Container(
+                                                          //width: 500.0,
+                                                            height: 10.0
+                                                        ),
+                                                           Text(
+                                                             'Это задание отправленно оператору',
+                                                             textAlign:TextAlign.center,
+                                                            style: TextStyle(
+                                                              fontSize: 20,
+                                                            ),
+                                                          ),
+
+                                                  /*
+                                                       ButtonBar(
+                                                        children: [
+                                                            RaisedButton(
+
+                                                                 onPressed: (){},
+                                                               child: Text(
+                                                                'OK'
+                                                                ),
+                                                                ),
+                                                                ],
+                                                                )
+                                                        */
+                                                                ],
+                                                                )
+                                                                ),
+                                                                );
+                                                                }
+                                                                );
+                                                          },
+
+                                        //окно - отправка
+/*
+                                        Future.delayed(const Duration(milliseconds: 1500),(){
+                                          cvet = Colors.red;
+                                          setState(() {
+                                            cvet = Colors.cyan[200];
+                                          });
+                                        });
+                                        //cvet = Colors.red;
+
+ */
+                                     // };
                                       title: Text(
                                       item.conNomer, // item.conNomer.toString(), был инт
                                     style: TextStyle(
@@ -113,7 +176,7 @@ class AdmPageQState extends State<HomePgNEW>{
                                       fontWeight: FontWeight.w500,
                                       letterSpacing: 1,
                                     ),
-                                  ),
+                                   ),
                                       subtitle: Text(
                                       item.nameCon,
                                       style: TextStyle(
@@ -121,9 +184,17 @@ class AdmPageQState extends State<HomePgNEW>{
                                          fontSize: 15,
                                        fontWeight: FontWeight.w500,
                                         letterSpacing: 1,
-                                  ),
-                                  ),
-                                       leading: Text(item.id.toString()),
+                                      ),
+                                      ),
+                                       //leading: Text(item.id.toString()),
+                                       leading:Text(
+                                         item.cvet,
+                                         style: TextStyle(
+                                           color: Colors.blue[900],
+                                           fontSize: 40,
+                                         ),
+                                       ),
+
                                       trailing:
                                           Row(
                                             mainAxisSize: MainAxisSize.min,
@@ -138,7 +209,6 @@ class AdmPageQState extends State<HomePgNEW>{
                                                     fromname=item.nameCon;
                                                     frommodel=item.conNomer;
                                                     DBChange.db.nomerYaConNEW =item.conNomer;
-                                                  //  FromModeltoMontag.fr=item.conNomer ;
                                                     runApp(ChangeListMontag());
                                                   }
                                               ),
@@ -218,6 +288,7 @@ class AdmPageQState extends State<HomePgNEW>{
                                                                      onPressed:() async{
                                                                        DBProvider.db.idInBase =  item.id;
                                                                        DBProvider.db.conNomerInBase = item.conNomer;
+                                                                       DBProvider.db.cvetNEW = item.cvet;
                                                                        await DBProvider.db.getMarka(DBProvider.db.newMarka);
                                                                        setState(() {});
                                                                      }
@@ -281,6 +352,7 @@ class AdmPageQState extends State<HomePgNEW>{
                                                                        onPressed:()async{
                                                                          DBProvider.db.idInBase =  item.id;
                                                                          DBProvider.db.nameConInBase = item.nameCon;
+                                                                         DBProvider.db.cvetNEW = item.cvet;
                                                                          await DBProvider.db.getModel(DBProvider.db.newModel);
                                                                          setState(() {});
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'adminPagePass.dart';
 import 'calc.dart';
+import 'operatorList.dart';
 
 class FirstPage extends StatelessWidget{
   @override
@@ -35,7 +36,12 @@ class FirstPage extends StatelessWidget{
                     ),
                     alignment: Alignment.center,
                     child: TextButton(
-                      onPressed: () {  // нажали на кнопку оператора
+                      onPressed: ()
+                      {
+                        runApp(OperatorList());
+                      },
+                      /*
+                      {  // нажали на кнопку оператора
                         showDialog(
                           context: context,
                           builder: (context){
@@ -82,6 +88,9 @@ class FirstPage extends StatelessWidget{
                         );
                         print("button pressed от оператора");
                       },
+                      */
+
+
                       child: Text(
                         "Оператор",
                         style: TextStyle(
