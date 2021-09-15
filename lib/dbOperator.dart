@@ -17,8 +17,9 @@ class DBOperator {
   String operModel;
   String operMarka;
   String operCvet;
+  var idInBaseOp;
 
-  var newOperCon = ContainerCooler( );
+  var newOperCon = ContainerCooler();
 
   Future<Database> get database async {
     if (_database != null)
@@ -44,9 +45,9 @@ class DBOperator {
                   "cvet TEXT"
                   ")"
           );
-
         });
   }
+
 /*
   newContainerCooler(ContainerCooler newContainerCooler) async {
     final db = await database;
@@ -78,7 +79,7 @@ class DBOperator {
           id,
           operModel,
           operMarka,
-          1,  //nomerYaCon, если не поставить бесконечная загрузка :)
+          1, //nomerYaCon, если не поставить бесконечная загрузка :)
           operCvet
         ]);
     return raw;
@@ -91,5 +92,26 @@ class DBOperator {
     res.isNotEmpty ? res.map((c) => ContainerCooler.fromMap(c)).toList() : [];
     return list;
   }
-}
 
+  /* :)
+  getCvet(ContainerCooler newContainerCooler) async {
+    final db = await database;
+    int id = idInBaseOp;
+    var cvetnewOper = '◄';
+
+    db.delete("ContainerCooler", where: "id = ?", whereArgs: [idInBaseOp]);
+    var res = await db.rawInsert(
+        "INSERT Into ContainerCooler (id,conNomer,nameCon,nomerYaCon,cvet)"
+            " VALUES (?,?,?,?,?)",
+        [
+          id,
+          operModel,
+          operMarka,
+          1,
+          cvetnewOper,
+        ]);
+    return res;
+  }
+  */
+
+}

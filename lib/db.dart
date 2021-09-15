@@ -16,6 +16,11 @@ class DBProvider {
   String nameConInBase;
   String cvetNEW; // new
 
+  var modelcvet;
+  var markacvet;
+  var idcvet;
+  var newOperCon = ContainerCooler();
+
   static final DBProvider db = DBProvider._();
   Database _database;
 
@@ -142,6 +147,26 @@ class DBProvider {
     return listtoSAVE;
 
   }
+
+  getCvet(ContainerCooler newContainerCooler) async {
+    final db = await database;
+    int id = idcvet;
+    var cvetnewOper = '◄';
+
+    db.delete("ContainerCooler", where: "id = ?", whereArgs: [idcvet]);
+    var res = await db.rawInsert(
+        "INSERT Into ContainerCooler (id,conNomer,nameCon,nomerYaCon,cvet)"
+            " VALUES (?,?,?,?,?)",
+        [
+          id,
+          modelcvet,
+          markacvet,
+          1,
+          cvetnewOper,
+        ]);
+    return res;
+  }
+
 }
 
 

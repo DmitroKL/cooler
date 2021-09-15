@@ -22,9 +22,7 @@ class AdmPageQState extends State<HomePgNEW>{
     ContainerCooler(conNomer: '23', nameCon: "Reinter", nomerYaCon: 1, cvet: "■"), //код 254 - ■ , 17  - ◄, 2- ☻
     ContainerCooler(conNomer: '250', nameCon: "Samsung", nomerYaCon: 1,cvet: "■"),
   ];
-
-
-
+  
   @override
   Widget build(BuildContext context) {
 
@@ -110,7 +108,17 @@ class AdmPageQState extends State<HomePgNEW>{
                                         DBOperator.db.operModel= item.conNomer;
                                         DBOperator.db.operMarka= item.nameCon;
                                         DBOperator.db.operCvet= item.cvet ;
+
+                                        // пересейф значка на добавлен
+                                        DBProvider.db.idcvet= item.id;
+                                        DBProvider.db.markacvet= item.nameCon;
+                                        DBProvider.db.modelcvet= item.conNomer;
+                                        DBProvider.db.getCvet(DBProvider.db.newOperCon);
+
+                                      //  DBOperator.db.getCvet(DBOperator.db.newOperCon);
+
                                         DBOperator.db.newCoolerTooOper(DBOperator.db.newOperCon);
+                                        setState(() {});
                                         print('knopks konter');
 
                                         showDialog(
@@ -134,20 +142,6 @@ class AdmPageQState extends State<HomePgNEW>{
                                                               fontSize: 20,
                                                             ),
                                                           ),
-
-                                                  /*
-                                                       ButtonBar(
-                                                        children: [
-                                                            RaisedButton(
-
-                                                                 onPressed: (){},
-                                                               child: Text(
-                                                                'OK'
-                                                                ),
-                                                                ),
-                                                                ],
-                                                                )
-                                                        */
                                                                 ],
                                                                 )
                                                                 ),
@@ -156,18 +150,6 @@ class AdmPageQState extends State<HomePgNEW>{
                                                                 );
                                                           },
 
-                                        //окно - отправка
-/*
-                                        Future.delayed(const Duration(milliseconds: 1500),(){
-                                          cvet = Colors.red;
-                                          setState(() {
-                                            cvet = Colors.cyan[200];
-                                          });
-                                        });
-                                        //cvet = Colors.red;
-
- */
-                                     // };
                                       title: Text(
                                       item.conNomer, // item.conNomer.toString(), был инт
                                     style: TextStyle(
