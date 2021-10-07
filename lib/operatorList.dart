@@ -3,7 +3,8 @@ import 'package:cooler/montagList.dart';
 import 'package:cooler/titlepage.dart';
 import 'package:flutter/material.dart';
 
-import 'ChangeList.dart';
+import 'changeList.dart';
+import 'changeListForOperator.dart';
 import 'db.dart';
 import 'dbChange.dart';
 import 'dbOperator.dart';
@@ -80,14 +81,11 @@ class AdmPageQState extends State<OperatorList>{
                             itemCount: snapshot.data.length,
                             itemBuilder: (BuildContext context, int index) {
                               ContainerCooler item = snapshot.data[index];
-
-
-
-                                return Dismissible(
+                              return Dismissible(
                                 key: UniqueKey(),
                                 background: Container(color: Colors.red),
                                 onDismissed: (direction) {
-                                  DBProvider.db.deleteContainerCooler(item.id);
+                                  DBOperator.db.deleteContainerCooler(item.id);
                                   setState(() {});
                                 },
 
@@ -115,6 +113,58 @@ class AdmPageQState extends State<OperatorList>{
                                         child:ListTile(
                                             onLongPress: (){
                                               print('oprtor long press');
+
+                                              DBOperator.db.idcvetTooAdm= item.id;
+                                              DBOperator.db.operModelTooAdm= item.conNomer;
+                                              DBOperator.db.operMarkaTooAdm= item.nameCon;
+                                              DBOperator.db.operCvetTooAdm= item.cvet ;
+                                              DBOperator.db.getCvetOper(DBProvider.db.newOperCon); // пересейф значка на выполнено
+                                              //выбираетса по моделе, поиск , замена флажка(контейнера) +/-
+                                              DBProvider.db.operModelTooAdmProv= item.conNomer;
+                                              DBProvider.db.operMarkaTooAdmProv= item.nameCon;
+                                              DBProvider.db.onModelTooAdmProv(DBProvider.db.newMarka);
+
+
+                                              // пересейф значка на выполнено
+                                            //  DBOperator.db.idcvetTooAdm= item.id;
+                                             // DBOperator.db.markacvet= item.nameCon;
+                                           //   DBOperator.db.modelcvet= item.conNomer;
+                                            //  DBProvider.db.getCvet(DBProvider.db.newOperCon);
+
+                                              //  DBOperator.db.getCvet(DBOperator.db.newOperCon);
+
+                                            //  DBOperator.db.newCoolerTooOper(DBOperator.db.newOperCon);
+                                              setState(() {});
+                                              print('knopks konter');
+
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context){
+                                                    return Dialog(
+                                                      child: Container(
+                                                          height: 80,
+                                                          width: 100,
+
+                                                          child: Column(
+                                                            children: [
+                                                              Container(
+                                                                //width: 500.0,
+                                                                  height: 10.0
+                                                              ),
+                                                              Text(
+                                                                'Это задание выполнено и отправлено админу',
+                                                                textAlign:TextAlign.center,
+                                                                style: TextStyle(
+                                                                  fontSize: 20,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )
+                                                      ),
+                                                    );
+                                                  }
+                                              );
+
                                             },
                                             title: Text(
                                               item.conNomer, // item.conNomer.toString(), был инт
@@ -156,7 +206,7 @@ class AdmPageQState extends State<OperatorList>{
                                                       fromname=item.nameCon;
                                                       frommodel=item.conNomer;
                                                       DBChange.db.nomerYaConNEW =item.conNomer;
-                                                      runApp(ChangeListMontag());
+                                                      runApp(ChangeListOperator());
                                                     }
                                                 ),
 

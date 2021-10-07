@@ -16,6 +16,9 @@ class DBProvider {
   String nameConInBase;
   String cvetNEW; // new
 
+  String operModelTooAdmProv; //из оператора копия модели для замены значка в адм
+  var operMarkaTooAdmProv;
+
   var modelcvet;
   var markacvet;
   var idcvet;
@@ -161,6 +164,30 @@ class DBProvider {
           id,
           modelcvet,
           markacvet,
+          1,
+          cvetnewOper,
+        ]);
+    return res;
+  }
+
+  onModelTooAdmProv(ContainerCooler newContainerCooler) async {
+    final db = await database;
+
+    var cvetnewOper = '☻';
+
+    db.delete("ContainerCooler", where: "conNomer = ?", whereArgs: [operModelTooAdmProv]);
+
+    var table = await db.rawQuery(
+        "SELECT MAX(id)+1 as id FROM ContainerCooler");
+    int id = table.first["id"];
+
+    var res = await db.rawInsert(
+        "INSERT Into ContainerCooler (id,conNomer,nameCon,nomerYaCon,cvet)"
+            " VALUES (?,?,?,?,?)",
+        [
+          id,
+          operModelTooAdmProv,
+          operMarkaTooAdmProv,
           1,
           cvetnewOper,
         ]);

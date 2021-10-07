@@ -5,7 +5,7 @@ import 'package:cooler/titlepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'ChangeList.dart';
+import 'changeList.dart';
 import 'db.dart';
 import 'dbChange.dart';
 import 'modelToSave.dart';
